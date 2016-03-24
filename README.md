@@ -2,7 +2,7 @@ Description
 ===========
 The Sublime Text FileMerge plugin is a modified version of the excellent [WinMerge](https://github.com/SublimeText/WinMerge) plugin.
 
-[FileMerge](https://developer.apple.com/xcode/features/) is a nice GUI file difference difference engine that is freely available for Mac OS X. This package adds support to Sublime Text 2 and 3 for allowing you to diff the last two active views, even if they are in different Sublime windows.
+[FileMerge](https://developer.apple.com/xcode/features/) is a nice GUI file difference engine that is freely available for Mac OS X. This package adds support to Sublime Text 2 and 3 for allowing you to diff the last two active views, even if they are in different Sublime windows.
 
 Package Installation
 ====================
