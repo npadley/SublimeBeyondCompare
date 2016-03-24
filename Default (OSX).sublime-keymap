@@ -1,0 +1,3 @@
+[
+    { "keys": ["ctrl+alt+d"],  "command": "file_merge" }
+]
