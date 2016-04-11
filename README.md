@@ -9,7 +9,7 @@ Package Installation
 Install using [Package Control](https://packagecontrol.io/installation) by searching for "BeyondCompare".
 
 Alternativly, bring up a command line in the Packages/ folder of your Sublime user folder, and execute the following:
-> git clone git://github.com/thtliife/BeyondCompare.git
+> git clone git://github.com/npadley/BeyondCompare.git
 
 When you launch Sublime Text, it will pick up the contents of this package so that you can consume the goodness that it provides.
 
