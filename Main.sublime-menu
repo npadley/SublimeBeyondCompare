@@ -5,9 +5,9 @@
         [
             { "id": "end" },
             {
-                "caption": "FileMerge: Show Diff",
-                "command": "file_merge",
-                "id": "filemerge-file-merge"
+                "caption": "BeyondCompare: Show Diff",
+                "command": "beyond_compare",
+                "id": "beyond-compare-launch"
             }
         ]
     }
