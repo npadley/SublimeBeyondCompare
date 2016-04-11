@@ -1,3 +1,3 @@
 [
-    { "keys": ["ctrl+alt+d"],  "command": "file_merge" }
+    { "keys": ["ctrl+alt+d"],  "command": "beyond_compare" }
 ]

@@ -1,6 +1,6 @@
 [
   {
-    "caption": "FileMerge: Show Diff",
-    "command": "file_merge"
+    "caption": "BeyondCompare: Show Diff",
+    "command": "beyond_compare"
   }
 ]
