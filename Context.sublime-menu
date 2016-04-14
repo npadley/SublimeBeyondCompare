@@ -1,0 +1,4 @@
+[
+    { "caption": "-", "id": "diff" },
+    { "command": "beyond_compare", "caption":"BeyondCompare: Show Diff"}
+]

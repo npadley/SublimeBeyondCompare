@@ -1,0 +1,29 @@
+
+Thank you for installing the BeyondCompare package.
+
+Instructions for OS X
+=====================
+
+In order to get started, it's important to make sure that you have command
+line tools installed.
+
+To do that, start BeyondCompare, then go to Beyond Compare in the menu bar
+and click the Install Command Line Tools item. After that, you should be
+able to use this plugin.
+
+If the above instructions do not work, please read the latest documentation
+at: http://www.scootersoftware.com/support.php?zz=kb_OSXInstallCLT
+
+Instructions for Use
+====================
+
+As you move around and work, the plugin remembers the to most recent active files
+or tabs. When activated, it loads those two files into BeyondCompare for you.
+
+After making any merge changes in the application, save and close your files. You
+should then receive a message to reload the files in the editor.
+
+Use the keyboard shortcut [Ctrl-Opt-D] to launch BeyondCompare.
+
+Use the menu item under Tools or the menu item under the
+right-click context menu.
