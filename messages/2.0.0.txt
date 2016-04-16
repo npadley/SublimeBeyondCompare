@@ -1,0 +1,12 @@
+BeyondCompare 2.0.0
+-------------------
+
+New Feature: Windows Support!
+
+- Tell all your friends!
+- Was able to get a copy of windows to test with. Thanks to the WinMerge folks
+for writing most of the code to determine the program path
+
+Fixes
+
+- Additional code refactoring to help with DRY

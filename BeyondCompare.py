@@ -1,7 +1,21 @@
 import sublime, sublime_plugin, os, webbrowser, subprocess
 
-fileA = fileB = None
+bCompareLocation = None
+isWindows = False
 
+#If we are on mac/unix
+if os.name == 'posix':
+    bCompareLocation = '/usr/local/bin/bcompare'
+
+#Or we are on windows
+else:
+    isWindows = True
+    if os.path.exists("%s\Beyond Compare 4\BCompare.exe" % os.environ['ProgramFiles(x86)']):
+        bCompareLocation = '"%s\Beyond Compare 4\BCompare.exe"' % os.environ['ProgramFiles(x86)']
+    else:
+        bCompareLocation = '"%s\Beyond Compare 4\BCompare.exe"' % os.environ['ProgramFiles']
+
+fileA = fileB = None
 
 def recordActiveFile(f):
     global fileA
@@ -9,19 +23,32 @@ def recordActiveFile(f):
     fileB = fileA
     fileA = f
 
+def runMacBeyondCompare():
+    if fileA != None and fileB != None:
+        cmd_line = str(bCompareLocation) + ' "' + str(fileA) + '" "' + str(fileB) + '"'
+        print("BeyondCompare comparing: LEFT [" + fileA + "] | RIGHT [" + fileB + "]")
+        subprocess.Popen([str(bCompareLocation), str(fileA), str(fileB)])
+        print("Should be open...")
+    else:
+        print("You must have activated TWO files to compare.\nPlease select two tabs to compare and try again")
+        sublime.error_message("You must have activated TWO files to compare.\nPlease select two tabs to compare and try again")
+
+def runWinBeyondCompare():
+    if fileA != None and fileB != None:
+        cmd_line = '%s "%s" "%s"' % (bCompareLocation, fileA, fileB)
+        print("BeyondCompare comparing: LEFT [" + fileA + "] | RIGHT [" + fileB + "]")
+        subprocess.Popen(cmd_line)
 
 class BeyondCompareCommand(sublime_plugin.ApplicationCommand):
     def run(self):
-        if os.path.exists("/usr/local/bin/bcompare"):
-            if fileA != None and fileB != None:
-                bCompareLocation = '/usr/local/bin/bcompare'
-                cmd_line = str(bCompareLocation) + ' "' + str(fileA) + '" "' + str(fileB) + '"'
-                print("BeyondCompare comparing: LEFT [" + fileA + "] | RIGHT [" + fileB + "]")
-                subprocess.Popen([str(bCompareLocation), str(fileA), str(fileB)])
-                print("Should be open...")
-            else:
-                print("You must have activated TWO files to compare.\nPlease select two tabs to compare and try again")
-                sublime.error_message("You must have activated TWO files to compare.\nPlease select two tabs to compare and try again")
+        # For Windows
+        if isWindows:
+            runWinBeyondCompare()
+            return
+
+        # For OSX
+        if os.path.exists(bCompareLocation):
+            runMacBeyondCompare()
 
         else:
             commandLinePrompt = sublime.ok_cancel_dialog('Could not find bcompare.\nPlease install the command line tools.', 'Do it now!')
@@ -32,15 +59,7 @@ class BeyondCompareCommand(sublime_plugin.ApplicationCommand):
                 bCompareInstalled = sublime.ok_cancel_dialog('Once you have installed the command line tools, click the ok button to continue')
                 if bCompareInstalled:
                     if os.path.exists("/usr/local/bin/bcompare"):
-                        if fileA != None and fileB != None:
-                            bCompareLocation = '/usr/local/bin/bcompare'
-                            cmd_line = str(bCompareLocation) + ' "' + str(fileA) + '" "' + str(fileB) + '"'
-                            print("BeyondCompare comparing: LEFT [" + fileA + "] | RIGHT [" + fileB + "]")
-                            subprocess.Popen([str(bCompareLocation), str(fileA), str(fileB)])
-                            print("Should be open...")
-                        else:
-                            print("You must have activated TWO files to compare.\nPlease select two tabs to compare and try again")
-                            sublime.error_message("You must have activated TWO files to compare.\nPlease select two tabs to compare and try again")
+                        runMacBeyondCompare()
 
                     else:
                         sublime.error_message('Still could not find bcompare. \nPlease make sure it exists at:\n/usr/local/bin/bcompare\nand try again')
