@@ -1,0 +1,7 @@
+
+BeyondCompare 2.0.1
+-------------------
+
+Fixes
+
+- Thanks to @jkrehm for a quick fix to improve functionality by ignoring vieews that don't have associated file names
