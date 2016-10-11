@@ -83,5 +83,5 @@ class BeyondCompareCommand(sublime_plugin.ApplicationCommand):
 
 class BeyondCompareFileListener(sublime_plugin.EventListener):
     def on_activated(self, view):
-        if view.file_name() != fileA:
+        if view.file_name() is not None and view.file_name() != fileA:
             recordActiveFile(view.file_name())
