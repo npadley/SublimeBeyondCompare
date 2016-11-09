@@ -4,22 +4,30 @@ import os
 import webbrowser
 import subprocess
 
-bCompareLocation = None
-isWindows = False
-
-# If we are on mac/unix
-if os.name == 'posix':
-    bCompareLocation = '/usr/local/bin/bcompare'
-
-# Or we are on windows
-else:
-    isWindows = True
-    if os.path.exists("%s\Beyond Compare 4\BCompare.exe" % os.environ['ProgramFiles(x86)']):
-        bCompareLocation = '"%s\Beyond Compare 4\BCompare.exe"' % os.environ['ProgramFiles(x86)']
-    else:
-        bCompareLocation = "%s\Beyond Compare 4\BCompare.exe" % os.environ['ProgramFiles']
-
 fileA = fileB = None
+
+
+def settings():
+    return sublime.load_settings('BeyondCompare.sublime-settings')
+
+
+def is_windows():
+    return os.name == 'nt'
+
+
+def get_location():
+    return settings().get('beyond_compare_path')
+
+
+def plugin_loaded() -> None:
+    # If we are on mac/unix
+    if is_windows():
+        if os.path.exists("%s\Beyond Compare 4\BCompare.exe" % os.environ['ProgramFiles(x86)']):
+            settings().set("beyond_compare_path", '"%s\Beyond Compare 4\BCompare.exe"' % os.environ['ProgramFiles(x86)'])
+        elif os.path.exists("%s\Beyond Compare 4\BCompare.exe" % os.environ['ProgramFiles']):
+            settings().set("beyond_compare_path", "%s\Beyond Compare 4\BCompare.exe" % os.environ['ProgramFiles'])
+        else:
+            sublime.error_message('Could not find Beyond Compare. Please set the path to your tool in BeyondCompare.sublime-settings.')
 
 
 def recordActiveFile(f):
@@ -33,7 +41,7 @@ def runMacBeyondCompare():
     if fileA is not None and fileB is not None:
         print(
             "BeyondCompare comparing: LEFT [" + fileA + "] | RIGHT [" + fileB + "]")
-        subprocess.Popen([str(bCompareLocation), str(fileA), str(fileB)])
+        subprocess.Popen([str(get_location()), str(fileA), str(fileB)])
         print("Should be open...")
     else:
         print(
@@ -44,21 +52,31 @@ def runMacBeyondCompare():
 
 def runWinBeyondCompare():
     if fileA is not None and fileB is not None:
-        cmd_line = '%s "%s" "%s"' % (bCompareLocation, fileA, fileB)
+        cmd_line = '%s "%s" "%s"' % (get_location(), fileA, fileB)
         print(
             "BeyondCompare comparing: LEFT [" + fileA + "] | RIGHT [" + fileB + "]")
         subprocess.Popen(cmd_line)
+    else:
+        print(
+            "You must have activated TWO files to compare.\nPlease select two tabs to compare and try again")
+        sublime.error_message(
+            "You must have activated TWO files to compare.\nPlease select two tabs to compare and try again")
 
 
 class BeyondCompareCommand(sublime_plugin.ApplicationCommand):
+
     def run(self):
         # For Windows
-        if isWindows:
-            runWinBeyondCompare()
-            return
+        if is_windows():
+            if os.path.exists(get_location()):
+                runWinBeyondCompare()
+                return
+            else:
+                sublime.error_message('Could not find Beyond Compare. Please set the path to your tool in BeyondCompare.sublime-settings.')
+                return
 
         # For OSX
-        if os.path.exists(bCompareLocation):
+        if os.path.exists(get_location()):
             runMacBeyondCompare()
 
         else:

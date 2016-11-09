@@ -1,0 +1,7 @@
+
+BeyondCompare 2.0.3
+-------------------
+
+Fixes
+
+- Added the ability to control a custom path in BeyondCompare.sublime-settings
