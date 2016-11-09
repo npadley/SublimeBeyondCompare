@@ -20,7 +20,7 @@ def get_location():
 
 
 def plugin_loaded() -> None:
-    # If we are on mac/unix
+    # If we are on windows - set a custom path
     if is_windows():
         if os.path.exists("%s\Beyond Compare 4\BCompare.exe" % os.environ['ProgramFiles(x86)']):
             settings().set("beyond_compare_path", '"%s\Beyond Compare 4\BCompare.exe"' % os.environ['ProgramFiles(x86)'])
