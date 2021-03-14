@@ -1,0 +1,5 @@
+
+BeyondCompare 2.0.4
+-------------------
+
+New Feature: The `beyond_compare_path` can accept a dictionary for multi-platform settings.
