@@ -25,15 +25,15 @@ def get_location():
 def plugin_loaded() -> None:
     # If we are on windows - set a custom path
     if is_windows():
-        if os.path.exists("%s\\Beyond Compare 4\\BCompare.exe" % os.environ['ProgramFiles(x86)']):
+        if os.path.exists(get_location()):
+            pass
+        elif os.path.exists("%s\\Beyond Compare 4\\BCompare.exe" % os.environ['ProgramFiles(x86)']):
             settings().set("beyond_compare_path", '"%s\\Beyond Compare 4\\BCompare.exe"'
                            % os.environ['ProgramFiles(x86)'])
             sublime.save_settings("BeyondCompare.sublime-settings")
         elif os.path.exists("%s\\Beyond Compare 4\\BCompare.exe" % os.environ['ProgramFiles']):
             settings().set("beyond_compare_path", "%s\\Beyond Compare 4\\BCompare.exe" % os.environ['ProgramFiles'])
             sublime.save_settings("BeyondCompare.sublime-settings")
-        elif os.path.exists(get_location()):
-            return
         else:
             sublime.error_message(
                 "Could not find Beyond Compare. Please set the path to your tool in BeyondCompare.sublime-settings.")
