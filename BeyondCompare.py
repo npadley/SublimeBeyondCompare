@@ -12,7 +12,11 @@ def settings():
 
 
 def is_windows():
-    return os.name == 'nt'
+    return sublime.platform() == "windows"
+
+
+def is_osx():
+    return sublime.platform() == "osx"
 
 
 def get_location():
@@ -62,21 +66,9 @@ def runBeyondCompare():
 class BeyondCompareCommand(sublime_plugin.ApplicationCommand):
 
     def run(self):
-        # For Windows
-        if is_windows():
-            if os.path.exists(get_location()):
-                runBeyondCompare()
-                return
-            else:
-                sublime.error_message(
-                   "Could not find Beyond Compare. Please set the path to your tool in BeyondCompare.sublime-settings.")
-                return
-
-        # For OSX
         if os.path.exists(get_location()):
             runBeyondCompare()
-
-        else:
+        elif is_osx():
             commandLinePrompt = sublime.ok_cancel_dialog(
                 "Could not find bcompare.\nPlease install the command line tools.", "Do it now!")
             if commandLinePrompt:
@@ -88,16 +80,17 @@ class BeyondCompareCommand(sublime_plugin.ApplicationCommand):
                 if bCompareInstalled:
                     if os.path.exists("/usr/local/bin/bcompare"):
                         runBeyondCompare()
-
                     else:
                         sublime.error_message(
                             "Still could not find bcompare. \nPlease make sure it exists at:\n/usr/local/bin/bcompare\n"
                             "and try again")
-
                 else:
                     sublime.error_message("Please try again after you have command line tools installed.")
             else:
                 sublime.error_message("Please try again after you have command line tools installed.")
+        else:
+            sublime.error_message(
+                "Could not find Beyond Compare. Please set the path to your tool in BeyondCompare.sublime-settings.")
 
 
 class BeyondCompareFileListener(sublime_plugin.EventListener):
