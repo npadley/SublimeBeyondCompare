@@ -57,8 +57,6 @@ def runBeyondCompare():
         subprocess.Popen([get_location(), fileA, fileB])
         print("Should be open...")
     else:
-        print(
-            "You must have activated TWO files to compare.\nPlease select two tabs to compare and try again")
         sublime.error_message(
             "You must have activated TWO files to compare.\nPlease select two tabs to compare and try again")
 
