@@ -46,25 +46,12 @@ def recordActiveFile(f):
     fileA = f
 
 
-def runMacBeyondCompare():
+def runBeyondCompare():
     if fileA is not None and fileB is not None:
         print(
             "BeyondCompare comparing: LEFT [" + fileA + "] | RIGHT [" + fileB + "]")
-        subprocess.Popen([str(get_location()), str(fileA), str(fileB)])
+        subprocess.Popen([get_location(), fileA, fileB])
         print("Should be open...")
-    else:
-        print(
-            "You must have activated TWO files to compare.\nPlease select two tabs to compare and try again")
-        sublime.error_message(
-            "You must have activated TWO files to compare.\nPlease select two tabs to compare and try again")
-
-
-def runWinBeyondCompare():
-    if fileA is not None and fileB is not None:
-        cmd_line = '%s "%s" "%s"' % (get_location(), fileA, fileB)
-        print(
-            "BeyondCompare comparing: LEFT [" + fileA + "] | RIGHT [" + fileB + "]")
-        subprocess.Popen(cmd_line)
     else:
         print(
             "You must have activated TWO files to compare.\nPlease select two tabs to compare and try again")
@@ -78,7 +65,7 @@ class BeyondCompareCommand(sublime_plugin.ApplicationCommand):
         # For Windows
         if is_windows():
             if os.path.exists(get_location()):
-                runWinBeyondCompare()
+                runBeyondCompare()
                 return
             else:
                 sublime.error_message(
@@ -87,7 +74,7 @@ class BeyondCompareCommand(sublime_plugin.ApplicationCommand):
 
         # For OSX
         if os.path.exists(get_location()):
-            runMacBeyondCompare()
+            runBeyondCompare()
 
         else:
             commandLinePrompt = sublime.ok_cancel_dialog(
@@ -100,7 +87,7 @@ class BeyondCompareCommand(sublime_plugin.ApplicationCommand):
                     "Once you have installed the command line tools, click the ok button to continue")
                 if bCompareInstalled:
                     if os.path.exists("/usr/local/bin/bcompare"):
-                        runMacBeyondCompare()
+                        runBeyondCompare()
 
                     else:
                         sublime.error_message(
