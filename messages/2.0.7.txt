@@ -1,0 +1,9 @@
+
+BeyondCompare 2.0.7
+-------------------
+
+Fixes
+
+- Fix the problem that the custom path under Windows will be overwritten
+- Unifying the `runBeyondCompare()` function
+- Optimize `BeyondCompareCommand` logic order
